@@ -1,20 +1,30 @@
 Summary:	RAW-image converter written in GTK+
+Summary(pl):	Konwerter obrazów RAW napisany w GTK+
 Name:		rawstudio
 Version:	0.4.1
 Release:	1
-License:	GPL v2
-Group:		Applications/Graphics
+License:	GPL v2+
+Group:		X11/Applications/Graphics
 Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # Source0-md5:	09844b550fbfd35f02623a549d5b4c33
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://rawstudio.org/
+BuildRequires:	GConf2-devel >= 2.0
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	lcms-devel
-BuildRequires:	gtk+2-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libxml2-devel >= 2.4
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Rawstudio is an open source raw-image converter written in GTK+.
+
+%description -l pl
+Rawstudio to maj±cy otwarte ¼ród³a konwerter obrazów RAW napisany w
+GTK+.
 
 %prep
 %setup -q
@@ -23,6 +33,7 @@ Rawstudio is an open source raw-image converter written in GTK+.
 %build
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure
 %{__make}
@@ -31,7 +42,7 @@ Rawstudio is an open source raw-image converter written in GTK+.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	distdir=$RPM_BUILD_ROOT/%{_datadir} \
+	distdir=$RPM_BUILD_ROOT%{_datadir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
