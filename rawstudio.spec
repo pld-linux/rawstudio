@@ -42,7 +42,6 @@ GTK+.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	distdir=$RPM_BUILD_ROOT%{_datadir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
