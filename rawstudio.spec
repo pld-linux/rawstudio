@@ -10,6 +10,7 @@ Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # Please, do not remove it temporary:
 #Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}-%{_snap}.tar.gz
 # Source0-md5:	b6826f3cb792ca222dfab3bbb2117609
+Patch0:		%{name}-DESTDIR.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf
@@ -30,6 +31,7 @@ GTK+.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__aclocal}
