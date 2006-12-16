@@ -2,19 +2,22 @@ Summary:	RAW-image converter written in GTK+
 Summary(pl):	Konwerter obrazów RAW napisany w GTK+
 Name:		rawstudio
 Version:	0.4.1
-%define	_snap	svn953
-Release:	1.%{_snap}.1
+%define	_svnrev		962
+%define	_snapday	20061216
+Release:	1.%{_svnrev}.%{_snapday}.1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
-Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
-# Please, do not remove it temporary:
-#Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}-%{_snap}.tar.gz
-# Source0-md5:	b6826f3cb792ca222dfab3bbb2117609
+# Original source:
+#Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
+# SVN snapshot:
+Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
+# Source0-md5:	27c4810fc9e5b708a772b99f0130e9ed
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	lcms-devel
 BuildRequires:	libjpeg-devel
@@ -30,14 +33,10 @@ Rawstudio to maj±cy otwarte ¼ród³a konwerter obrazów RAW napisany w
 GTK+.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}
 
 %build
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
+./autogen.sh
 %configure
 %{__make}
 
