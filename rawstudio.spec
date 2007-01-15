@@ -10,8 +10,8 @@ Group:		X11/Applications/Graphics
 # Original source:
 #Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # SVN snapshot:
-#Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
-Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}-svn%{_svnrev}.tar.bz2
+#Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}-svn%{_svnrev}.tar.bz2
+Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
 # Source0-md5:	ef59999054b3e1547d4eb3f8f4bd8518
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://rawstudio.org/
