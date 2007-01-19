@@ -1,0 +1,158 @@
+Index: rs-batch.c
+===================================================================
+--- rs-batch.c	(revision 1080)
++++ rs-batch.c	(working copy)
+@@ -26,6 +26,8 @@
+ #include "gettext.h"
+ #include "gtk-helper.h"
+ 
++static gchar *filenames[] = {DEFAULT_CONF_EXPORT_FILENAME, "%f", "%f_%c", "%f_output_%4c", NULL};
++
+ extern GtkWindow *rawstudio_window;
+ 
+ static gboolean batch_exists_in_queue(RS_QUEUE *queue, const gchar *filename, gint setting_id);
+@@ -60,6 +62,8 @@
+ 
+ 	queue->running = FALSE;
+ 
++	queue->running = FALSE;
++
+ 	return queue;
+ }
+ 
+@@ -286,6 +290,115 @@
+ }
+ 
+ static GtkWidget *
++make_batchsettings()
++{
++	GtkWidget *expander;
++	GtkWidget *expander_label;
++	GtkWidget *box;
++	GtkWidget *directory_hbox;
++	GtkWidget *directory_label;
++	GtkWidget *directory_entry;
++	GtkWidget *filename_hbox;
++	GtkWidget *filename_label;
++	GtkWidget *filename_entry;
++	GtkWidget *filetype_hbox;
++	GtkWidget *filetype_label;
++	RS_CONFBOX *filetype_confbox;
++	GtkWidget *tiff_uncompressed_check;
++	RS_FILETYPE *filetype;
++	gchar *conf_temp = NULL;
++	gint n;
++
++	expander = gtk_expander_new (NULL);
++	gtk_widget_show (expander);
++	gtk_expander_set_expanded (GTK_EXPANDER (expander), FALSE);
++
++	expander_label = gtk_label_new (_("Settings"));
++	gtk_widget_show (expander_label);
++	gtk_expander_set_label_widget (GTK_EXPANDER (expander), expander_label);
++	gtk_label_set_use_markup (GTK_LABEL (expander_label), TRUE);
++
++	box = gtk_vbox_new(FALSE, 4);
++	gtk_container_set_border_width (GTK_CONTAINER (box), 6);
++
++	directory_hbox = gtk_hbox_new(FALSE, 0);
++	directory_label = gtk_label_new(_("Directory:"));
++	gtk_misc_set_alignment(GTK_MISC(directory_label), 0.0, 0.5);
++	directory_entry = gtk_entry_new();
++	conf_temp = rs_conf_get_string(CONF_BATCH_DIRECTORY);
++
++	if (conf_temp)
++	{
++		gtk_entry_set_text(GTK_ENTRY(directory_entry), conf_temp);
++		g_free(conf_temp);
++	}
++	gtk_box_pack_start (GTK_BOX (directory_hbox), directory_label, TRUE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (directory_hbox), directory_entry, FALSE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (box), directory_hbox, FALSE, TRUE, 0);
++
++	filename_hbox = gtk_hbox_new(FALSE, 0);
++	filename_label = gtk_label_new(_("Filename:"));
++	gtk_misc_set_alignment(GTK_MISC(filename_label), 0.0, 0.5);
++	filename_entry = gtk_combo_box_entry_new_text();
++	conf_temp = rs_conf_get_string(CONF_BATCH_FILENAME);
++
++	if (!conf_temp)
++	{
++		rs_conf_set_string(CONF_BATCH_FILENAME, DEFAULT_CONF_BATCH_FILENAME);
++		conf_temp = rs_conf_get_string(CONF_BATCH_FILENAME);
++	}
++
++	gtk_combo_box_append_text(GTK_COMBO_BOX(filename_entry), conf_temp);
++
++	n=0;
++	while(filenames[n])
++	{
++		gtk_combo_box_append_text(GTK_COMBO_BOX(filename_entry), filenames[n]);   
++		n++;
++	}
++	gtk_combo_box_set_active(GTK_COMBO_BOX(filename_entry), 0);
++	g_free(conf_temp);
++	gtk_box_pack_start (GTK_BOX (filename_hbox), filename_label, TRUE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (filename_hbox), filename_entry, FALSE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (box), filename_hbox, FALSE, TRUE, 0);
++
++	filetype_hbox = gtk_hbox_new(FALSE, 0);
++	filetype_label = gtk_label_new(_("Filetype:"));
++	gtk_misc_set_alignment(GTK_MISC(filetype_label), 0.0, 0.5);
++
++	if (!rs_conf_get_filetype(CONF_BATCH_FILETYPE, &filetype))
++		rs_conf_set_filetype(CONF_BATCH_FILETYPE, filetype); /* set default */
++
++	filetype_confbox = gui_confbox_filetype_new(CONF_BATCH_FILETYPE);
++
++	tiff_uncompressed_check = checkbox_from_conf(CONF_BATCH_TIFF_UNCOMPRESSED, _("Save uncompressed TIFF"), FALSE);
++
++	gtk_box_pack_start (GTK_BOX (filetype_hbox), filetype_label, TRUE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (filetype_hbox), gui_confbox_get_widget(filetype_confbox), FALSE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX (box), filetype_hbox, FALSE, TRUE, 0);
++
++	gtk_box_pack_start (GTK_BOX (box), tiff_uncompressed_check, FALSE, TRUE, 0);
++
++	g_signal_connect ((gpointer) directory_entry, "changed", 
++		G_CALLBACK(gui_batch_directory_entry_changed), NULL);
++	g_signal_connect ((gpointer) filename_entry, "changed", 
++		G_CALLBACK(gui_batch_filename_entry_changed), NULL);
++	gui_confbox_set_callback(filetype_confbox, NULL, gui_batch_filetype_combobox_changed);
++	
++	GtkWidget *whbox = gtk_hbox_new(FALSE,4);
++
++	gtk_box_pack_start (GTK_BOX(box), checkbox_from_conf(CONF_BATCH_RESIZE, _("Resize"), FALSE),FALSE, TRUE, 0);
++
++	gtk_box_pack_start (GTK_BOX(whbox), GTK_WIDGET(spinner_from_conf(CONF_BATCH_WIDTH, _("Width"),800)),FALSE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX(whbox), GTK_WIDGET(spinner_from_conf(CONF_BATCH_HEIGHT, _("Height"),533)),FALSE, TRUE, 0);
++	gtk_box_pack_start (GTK_BOX(box), whbox,FALSE, TRUE, 0);
++
++	gtk_container_add (GTK_CONTAINER (expander), box);
++	
++	return expander;
++}
++
++static GtkWidget *
+ make_batchview(RS_QUEUE *queue)
+ {
+ 	GtkWidget *scroller;
+@@ -415,6 +528,7 @@
+ 	GtkWidget *batchbox;
+ 
+ 	batchbox = gtk_vbox_new(FALSE,4);
++	gtk_box_pack_start (GTK_BOX (batchbox), make_batchsettings(queue), FALSE, FALSE, 0);
+ 	gtk_box_pack_start (GTK_BOX (batchbox), make_batchview(queue), TRUE, TRUE, 0);
+ 	gtk_box_pack_start (GTK_BOX (batchbox), make_batchbuttons(queue), FALSE, FALSE, 0);
+ 
+Index: conf_interface.h
+===================================================================
+--- conf_interface.h	(revision 1080)
++++ conf_interface.h	(working copy)
+@@ -28,6 +28,7 @@
+ #define CONF_BATCH_DIRECTORY "batch_directory"
+ #define CONF_BATCH_FILENAME "batch_filename"
+ #define CONF_BATCH_FILETYPE "batch_filetype"
++#define CONF_BATCH_RESIZE "batch_resize"
+ #define CONF_BATCH_WIDTH "batch_width"
+ #define CONF_BATCH_HEIGHT "batch_height"
+ #define CONF_BATCH_JPEG_QUALITY "batch_jpeg_quality"
