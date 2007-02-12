@@ -1,5 +1,5 @@
 Summary:	RAW-image converter written in GTK+
-Summary(pl):	Konwerter obrazów RAW napisany w GTK+
+Summary(pl.UTF-8):   Konwerter obrazÃ³w RAW napisany w GTK+
 Name:		rawstudio
 Version:	0.5
 %define	_svnrev		1080
@@ -29,8 +29,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Rawstudio is an open source raw-image converter written in GTK+.
 
-%description -l pl
-Rawstudio to maj±cy otwarte ¼ród³a konwerter obrazów RAW napisany w
+%description -l pl.UTF-8
+Rawstudio to majÄ…cy otwarte ÅºrÃ³dÅ‚a konwerter obrazÃ³w RAW napisany w
 GTK+.
 
 %prep
