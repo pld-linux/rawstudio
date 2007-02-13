@@ -1,5 +1,5 @@
 Summary:	RAW-image converter written in GTK+
-Summary(pl.UTF-8):   Konwerter obrazów RAW napisany w GTK+
+Summary(pl.UTF-8):	Konwerter obrazów RAW napisany w GTK+
 Name:		rawstudio
 Version:	0.5
 %define	_svnrev		1080
