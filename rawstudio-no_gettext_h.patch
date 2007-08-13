@@ -1,0 +1,11 @@
+--- ./src/wb_presets.h.org	2007-08-13 02:15:03.000000000 +0000
++++ ./src/wb_presets.h	2007-08-13 12:11:56.000000000 +0000
+@@ -19,7 +19,7 @@
+ 
+ #include <gtk/gtk.h>
+ #include <glib.h>
+-#include <gettext.h>
++//#include <gettext.h>
+ #include "rawstudio.h"
+ #include "color.h"
+ 
