@@ -1,0 +1,36 @@
+# HG changeset patch
+# User Edouard Gomez <ed.gomez@free.fr>
+# Date 1199617668 -3600
+# Node ID 5920e5f8014c64d9001f8f14781d5f9f971c928c
+# Parent  3ef8a2fb5cf490dec479949646859b9ce7d092e6
+Fix sigsegv when no gconf configuration yet
+
+diff -r 3ef8a2fb5cf4 -r 5920e5f8014c src/rs-batch.c
+--- a/src/rs-batch.c	Sat Dec 15 11:47:14 2007 +0000
++++ b/src/rs-batch.c	Sun Jan 06 12:07:48 2008 +0100
+@@ -181,16 +181,17 @@ RS_QUEUE* rs_batch_new_queue(void)
+ 	rs_conf_get_integer(CONF_BATCH_SIZE_WIDTH, &queue->width);
+ 	rs_conf_get_integer(CONF_BATCH_SIZE_HEIGHT, &queue->height);
+ 	tmp = rs_conf_get_string(CONF_BATCH_SIZE_LOCK);
+-	if (g_str_equal(tmp, "bounding-box"))
+-		queue->size_lock = LOCK_BOUNDING_BOX;
+-	else if (g_str_equal(tmp, "width"))
+-		queue->size_lock = LOCK_WIDTH;
+-	else if (g_str_equal(tmp, "height"))
+-		queue->size_lock = LOCK_HEIGHT;
+-	else
+-		queue->size_lock = LOCK_SCALE;
+ 	if (tmp)
++	{
++		if (g_str_equal(tmp, "bounding-box"))
++			queue->size_lock = LOCK_BOUNDING_BOX;
++		else if (g_str_equal(tmp, "width"))
++			queue->size_lock = LOCK_WIDTH;
++		else if (g_str_equal(tmp, "height"))
++			queue->size_lock = LOCK_HEIGHT;
+ 		g_free(tmp);
++	}
++
+ 	return queue;
+ }
+ 
