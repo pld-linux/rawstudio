@@ -3,18 +3,17 @@ Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	0.7
 # Keep it for future snapshots because releases are not-so-frequent:
-#%define	_svnrev		1560
-#%define	_snapday	20080106
-#%define	_rel		1
-#Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
-Release:	1
+%define	_svnrev		1624
+%define	_snapday	20080130
+%define	_rel		1
+Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 # SVN snapshot:
-#Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
+Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
+# Source0-md5:	2e58d4bb3fc7325d2e09d8baa30962bc
 # Original source:
-Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
-# Source0-md5:	2e4cfe76e4f571bc6ee6120b0ccab031
+#Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-pl_desktop.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
@@ -36,7 +35,7 @@ Rawstudio to mający otwarte źródła konwerter obrazów RAW napisany z użycie
 biblioteki GTK+.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %patch0 -p1
 
 %build
@@ -50,10 +49,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{find_lang} %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README TODO
 %attr(755,root,root) %{_bindir}/%{name}
