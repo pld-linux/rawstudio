@@ -1,20 +1,20 @@
 Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
-Version:	0.7
+Version:	1.0
 # Keep it for future snapshots because releases are not-so-frequent:
 %define	_svnrev		1624
 %define	_snapday	20080130
 %define	_rel		1
-Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
+#Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
+Release: 1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 # SVN snapshot:
-Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
-# Source0-md5:	2e58d4bb3fc7325d2e09d8baa30962bc
+#Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
 # Original source:
-#Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
-Patch0:		%{name}-pl_desktop.patch
+Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
+# Source0-md5:	26ddd38ccb5d74f7c7c6759dae13b7ad
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf
@@ -28,15 +28,15 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Rawstudio is an open source raw-image converter written using GTK+ library.
+Rawstudio is an open source raw-image converter written using GTK+
+library.
 
 %description -l pl.UTF-8
-Rawstudio to mający otwarte źródła konwerter obrazów RAW napisany z użyciem
-biblioteki GTK+.
+Rawstudio to mający otwarte źródła konwerter obrazów RAW napisany z
+użyciem biblioteki GTK+.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1
+%setup -q
 
 %build
 ./autogen.sh
@@ -60,5 +60,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %{_desktopdir}/%{name}.desktop
 %dir %{_pixmapsdir}/%{name}
-%{_pixmapsdir}/%{name}.png
 %{_pixmapsdir}/%{name}/*.png
+%{_iconsdir}/%{name}.png
+%{_datadir}/%{name}
