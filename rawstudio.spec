@@ -5,7 +5,7 @@ Version:	1.0
 # Keep it for future snapshots because releases are not-so-frequent:
 %define	_svnrev		1624
 %define	_snapday	20080130
-%define	_rel		2
+%define	_rel		3
 #Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
 Release:	%{_rel}
 License:	GPL v2+
