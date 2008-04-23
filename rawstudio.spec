@@ -41,8 +41,8 @@ użyciem biblioteki GTK+.
 %patch0 -p1
 
 cd po
-mv cz.po cs_CZ.po
-mv cz.gmo cs_CZ.gmo
+mv cz.po cs.po
+mv cz.gmo cs.gmo
 
 %build
 ./autogen.sh
