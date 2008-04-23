@@ -5,7 +5,7 @@
  
  dnl Add the languages which your application supports here.
 -ALL_LINGUAS="cz da de en fr it nb pl ru fi es"
-+ALL_LINGUAS="cs_CZ da de en fr it nb pl ru fi es"
++ALL_LINGUAS="cs da de en fr it nb pl ru fi es"
  AM_GLIB_GNU_GETTEXT
  AC_CHECK_FUNCS(memmem)
  
