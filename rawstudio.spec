@@ -1,11 +1,11 @@
 Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
-Version:	1.1
+Version:	1.1.1
+%define	_rel	1
 # Keep it for future snapshots because releases are not-so-frequent:
 %define	_svnrev		1624
 %define	_snapday	20080130
-%define	_rel		1
 #Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
 Release:	%{_rel}
 License:	GPL v2+
@@ -14,7 +14,7 @@ Group:		X11/Applications/Graphics
 #Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
 # Original source:
 Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
-# Source0-md5:	3cb765839c0f705dffa2ec1806a1eea3
+# Source0-md5:	be789f2efcaba38f1fd8bef5e4297c83
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf
