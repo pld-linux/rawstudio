@@ -25,6 +25,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	lcms-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel >= 2.4
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
