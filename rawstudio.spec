@@ -41,12 +41,11 @@ użyciem biblioteki GTK+.
 
 %package devel
 Summary:	rawstudio devel files
-Summary(pl.UTF-8):	rawstudio devel files
-Group:		X11/Applications/Graphics
+Group:		X11/Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
-%description devel -l UTF-8
-
+Header files for %{name}.
 
 %prep
 %setup -q
@@ -62,7 +61,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{find_lang} %{name}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/librawstudio-%{version}.la
+
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,5 +88,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_includedir}/%{name}-%{version}
 %{_libdir}/librawstudio-%{version}.so
-%{_libdir}/librawstudio-%{version}.la
 %{_pkgconfigdir}/%{name}-%{version}.pc
