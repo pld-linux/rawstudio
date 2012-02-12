@@ -15,6 +15,7 @@ Group:		X11/Applications/Graphics
 # Original source:
 Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # Source0-md5:	b2f86b8ca6b83ad954e3104c4cb89e9b
+Patch0:		%{name}-libpng15.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf
@@ -49,6 +50,7 @@ Header files for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 ./autogen.sh
