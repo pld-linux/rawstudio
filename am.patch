@@ -1,0 +1,19 @@
+--- rawstudio-2.0/configure.in~	2013-06-13 10:08:20.678617824 +0200
++++ rawstudio-2.0/configure.in	2013-06-13 10:08:39.662157989 +0200
+@@ -2,7 +2,7 @@
+ 
+ AC_INIT(configure.in)
+ AM_INIT_AUTOMAKE(rawstudio, 2.0)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ AM_MAINTAINER_MODE
+ AM_PROG_LIBTOOL
+ AC_CONFIG_MACRO_DIR([m4])
+@@ -9,7 +9,6 @@
+ 
+ AC_ISC_POSIX
+ AC_PROG_CC
+-AM_PROG_CC_STDC
+ AC_PROG_CXX
+ AC_HEADER_STDC
+ 
