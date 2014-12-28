@@ -24,7 +24,7 @@ BuildRequires:	automake
 BuildRequires:	exiv2-devel
 BuildRequires:	fftw3-single-devel
 BuildRequires:	flickcurl-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	lcms-devel
 BuildRequires:	lensfun-devel
