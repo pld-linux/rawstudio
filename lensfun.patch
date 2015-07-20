@@ -1,0 +1,11 @@
+--- rawstudio-2.0/plugins/lensfun/lensfun.c~	2011-03-27 17:53:27.000000000 +0000
++++ rawstudio-2.0/plugins/lensfun/lensfun.c	2015-07-20 18:15:21.691308292 +0000
+@@ -652,7 +652,7 @@
+ 			}
+ 
+ 			/* Start threads to apply phase 2, Vignetting and CA Correction */
+-			if (effective_flags & (LF_MODIFY_VIGNETTING | LF_MODIFY_CCI)) 
++			if (effective_flags & LF_MODIFY_VIGNETTING) 
+ 			{
+ 				/* Phase 2 is corrected inplace, so copy input first */
+ 				guint y_offset, y_per_thread, threaded_h;
