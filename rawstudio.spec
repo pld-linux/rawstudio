@@ -2,16 +2,16 @@ Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	2.0
-%define	_rel	11
+%define	rel	12
 # Keep it for future snapshots because releases are not-so-frequent:
-%define	_svnrev		1624
-%define	_snapday	20080130
-#Release:	1.%{_svnrev}.%{_snapday}.%{_rel}
-Release:	%{_rel}
+%define	svnrev	1624
+%define	snap	20080130
+#Release:	1.%{svnrev}.%{snap}.%{rel}
+Release:	%{rel}
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 # SVN snapshot:
-#Source0:	http://rawstudio.org/files/daily/%{name}-%{_snapday}-%{_svnrev}.tar.bz2
+#Source0:	http://rawstudio.org/files/daily/%{name}-%{snap}-%{svnrev}.tar.bz2
 # Original source:
 Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # Source0-md5:	b2f86b8ca6b83ad954e3104c4cb89e9b
@@ -20,19 +20,27 @@ Patch1:		am.patch
 Patch2:		lensfun.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	curl-devel
+BuildRequires:	dbus-devel
 BuildRequires:	exiv2-devel
-BuildRequires:	fftw3-single-devel
+BuildRequires:	fftw3-single-devel >= 3
 BuildRequires:	flickcurl-devel
 BuildRequires:	gettext-tools
-BuildRequires:	gtk+2-devel >= 1:2.0.0
+BuildRequires:	gtk+2-devel >= 2:2.8.0
 BuildRequires:	lcms-devel
 BuildRequires:	lensfun-devel
+BuildRequires:	libgphoto2-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel >= 2.4
+BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
+BuildRequires:	sqlite3-devel >= 3
+BuildRequires:	xorg-lib-libX11-devel
+Requires:	gtk+2 >= 2:2.8.0
+Requires:	libxml2 >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -97,6 +105,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/librawstudio-%{version}.so
 %{_includedir}/%{name}-%{version}
-%{_libdir}/librawstudio-%{version}.so
 %{_pkgconfigdir}/%{name}-%{version}.pc
