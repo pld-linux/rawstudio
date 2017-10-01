@@ -2,7 +2,7 @@ Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	2.0
-%define	rel	13
+%define	rel	14
 # Keep it for future snapshots because releases are not-so-frequent:
 %define	svnrev	1624
 %define	snap	20080130
@@ -66,6 +66,7 @@ Header files for %{name}.
 %patch2 -p1
 
 %build
+export CXXFLAGS="%{rpmcxxflags} -Wno-narrowing"
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
