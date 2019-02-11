@@ -1,0 +1,30 @@
+--- rawstudio-2.0/librawstudio/rs-exif.cc~	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-exif.cc	2019-02-11 21:02:25.572143480 +0100
+@@ -21,6 +21,7 @@
+ #include <iomanip>
+ #include <exiv2/image.hpp>
+ #include <exiv2/exif.hpp>
++#include <exiv2/version.hpp>
+ #include "rs-exif.h"
+ #include <assert.h>
+ #include "rs-library.h"
+--- rawstudio-2.0/plugins/load-gdk/exiv2-colorspace.cpp~	2019-02-11 21:06:38.000000000 +0100
++++ rawstudio-2.0/plugins/load-gdk/exiv2-colorspace.cpp	2019-02-11 21:10:56.249335153 +0100
+@@ -22,6 +22,7 @@
+ #include <iomanip>
+ #include <exiv2/image.hpp>
+ #include <exiv2/exif.hpp>
++#include <exiv2/version.hpp>
+ #include <assert.h>
+ #include "exiv2-colorspace.h"
+ #include <math.h>
+--- rawstudio-2.0/plugins/meta-exiv2/exiv2-metadata.cpp~	2011-02-27 00:13:39.000000000 +0100
++++ rawstudio-2.0/plugins/meta-exiv2/exiv2-metadata.cpp	2019-02-11 21:13:17.619365687 +0100
+@@ -22,6 +22,7 @@
+ #include <iomanip>
+ #include <exiv2/image.hpp>
+ #include <exiv2/exif.hpp>
++#include <exiv2/version.hpp>
+ #include <assert.h>
+ #include "exiv2-metadata.h"
+ #include <math.h>

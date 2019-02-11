@@ -2,7 +2,7 @@ Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	2.0
-%define	rel	14
+%define	rel	15
 # Keep it for future snapshots because releases are not-so-frequent:
 %define	svnrev	1624
 %define	snap	20080130
@@ -18,6 +18,7 @@ Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 Patch0:		%{name}-libpng15.patch
 Patch1:		am.patch
 Patch2:		lensfun.patch
+Patch3:		exiv2-version.patch
 URL:		http://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf >= 2.59
@@ -39,6 +40,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	zstd-devel
 Requires:	gtk+2 >= 2:2.8.0
 Requires:	libxml2 >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -64,6 +66,7 @@ Header files for %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export CXXFLAGS="%{rpmcxxflags} -Wno-narrowing"
