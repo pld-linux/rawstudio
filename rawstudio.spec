@@ -54,12 +54,16 @@ Rawstudio to mający otwarte źródła konwerter obrazów RAW napisany z
 użyciem biblioteki GTK+.
 
 %package devel
-Summary:	rawstudio devel files
+Summary:	Header files for rawstudio library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki rawstudio
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files for %{name}.
+Header files for rawstudio library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki rawstudio.
 
 %prep
 %setup -q
