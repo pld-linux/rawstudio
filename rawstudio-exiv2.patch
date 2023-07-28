@@ -1,0 +1,133 @@
+--- rawstudio-2.0/librawstudio/rs-exif.cc.orig	2023-07-28 10:02:58.719194767 +0200
++++ rawstudio-2.0/librawstudio/rs-exif.cc	2023-07-28 10:14:53.735321192 +0200
+@@ -35,6 +35,11 @@
+ #include <exiv2/convert.hpp>
+ #endif
+ 
++#if EXIV2_TEST_VERSION(0,28,0)
++#define AutoPtr UniquePtr
++#define AnyError Error
++#endif
++
+ extern "C" {
+ #include <rawstudio.h>
+ #include "config.h"
+--- rawstudio-2.0/plugins/load-gdk/exiv2-colorspace.cpp.orig	2023-07-28 11:24:32.062685250 +0200
++++ rawstudio-2.0/plugins/load-gdk/exiv2-colorspace.cpp	2023-07-28 11:30:30.787408538 +0200
+@@ -38,6 +38,10 @@
+ #include <exiv2/convert.hpp>
+ #endif
+ 
++#if EXIV2_TEST_VERSION(0,28,0)
++#define AutoPtr UniquePtr
++#endif
++
+ 
+ extern "C" {
+ 
+@@ -170,13 +174,13 @@ jpeg_fail:
+ 			ExifData::const_iterator i;
+ 			i = exifData.findKey(ExifKey("Exif.Image.BitsPerSample"));
+ 			if (i != exifData.end())
+-				if (i->toLong() == 16)
++				if (i->toInt64() == 16)
+ 					*linear_guess = TRUE;
+ 			
+ 			i = exifData.findKey(ExifKey("Exif.Photo.ColorSpace"));
+ 			if (i != exifData.end())
+ 			{
+-				if (i->toLong() == 1)
++				if (i->toInt64() == 1)
+ 					return rs_color_space_new_singleton("RSSrgb");
+ 			}
+ 
+@@ -185,10 +189,10 @@ jpeg_fail:
+ 			if (i != exifData.end())
+ 			{
+ 				DataBuf buf(i->size());
+-				i->copy(buf.pData_, Exiv2::invalidByteOrder);
+-				if (buf.pData_ && buf.size_)
++				i->copy(buf.data(), Exiv2::invalidByteOrder);
++				if (buf.c_data() && buf.size())
+ 				{
+-					RSIccProfile *icc = rs_icc_profile_new_from_memory((gchar*)buf.pData_, buf.size_, TRUE);
++					RSIccProfile *icc = rs_icc_profile_new_from_memory((gchar*)buf.c_data(), buf.size(), TRUE);
+ 					return rs_color_space_icc_new_from_icc(icc);
+ 				}
+ 			}
+--- rawstudio-2.0/plugins/meta-exiv2/exiv2-metadata.cpp.orig	2023-07-28 11:24:32.062685250 +0200
++++ rawstudio-2.0/plugins/meta-exiv2/exiv2-metadata.cpp	2023-07-28 11:33:42.159705119 +0200
+@@ -40,6 +40,10 @@
+ #include <exiv2/easyaccess.hpp>
+ #endif
+ 
++#if EXIV2_TEST_VERSION(0,28,0)
++#define AutoPtr UniquePtr
++#endif
++
+ extern "C" {
+ 
+ /** INTERFACE **/
+@@ -122,7 +126,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			i = orientation(exifData);
+ 			if (i != exifData.end())
+ 			{
+-				switch (i->getValue()->toLong())
++				switch (i->getValue()->toInt64())
+ 				{
+ 						case 6: meta->orientation = 90;
+ 							break;
+@@ -174,7 +178,7 @@ exiv2_load_meta_interface(const gchar *s
+ #if EXIV2_TEST_VERSION(0,19,0)
+ 			i = isoSpeed(exifData);
+ 			if (i != exifData.end())
+-				meta->iso = i->toLong();
++				meta->iso = i->toInt64();
+ 
+ 			/* Text based Lens Identifier */
+ 			i = lensName(exifData);
+@@ -182,7 +186,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			{
+ 				TypeId type = i->typeId();
+ 				if (type == unsignedShort || type == unsignedLong || type == signedShort || type == signedLong || type == unsignedByte || type == signedByte)
+-					meta->lens_id = i->toLong();
++					meta->lens_id = i->toInt64();
+ 				else if (type == asciiString || type == string)
+ 					meta->fixed_lens_identifier = g_strdup(i->toString().c_str());
+ 			}
+@@ -224,7 +228,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			if (i == exifData.end())
+ 				i = exifData.findKey(ExifKey("Exif.NikonLd3.MinFocalLength"));
+ 			if (i != exifData.end())
+-				meta->lens_min_focal = 5.0 * pow(2.0, i->toLong()/24.0);
++				meta->lens_min_focal = 5.0 * pow(2.0, i->toInt64()/24.0);
+ 
+ 			i = exifData.findKey(ExifKey("Exif.NikonLd1.MaxFocalLength"));
+ 			if (i == exifData.end())
+@@ -232,7 +236,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			if (i == exifData.end())
+ 				i = exifData.findKey(ExifKey("Exif.NikonLd3.MaxFocalLength"));
+ 			if (i != exifData.end())
+-				meta->lens_max_focal = 5.0 * pow(2.0, i->toLong()/24.0);
++				meta->lens_max_focal = 5.0 * pow(2.0, i->toInt64()/24.0);
+ 
+ 			i = exifData.findKey(ExifKey("Exif.NikonLd1.MaxApertureAtMinFocal"));
+ 			if (i == exifData.end())
+@@ -240,7 +244,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			if (i == exifData.end())
+ 				i = exifData.findKey(ExifKey("Exif.NikonLd3.MaxApertureAtMinFocal"));
+ 			if (i != exifData.end())
+-				meta->lens_min_aperture = i->toLong()/12.0;
++				meta->lens_min_aperture = i->toInt64()/12.0;
+ 			
+ 			i = exifData.findKey(ExifKey("Exif.NikonLd1.MaxApertureAtMaxFocal"));
+ 			if (i == exifData.end())
+@@ -248,7 +252,7 @@ exiv2_load_meta_interface(const gchar *s
+ 			if (i == exifData.end())
+ 				i = exifData.findKey(ExifKey("Exif.NikonLd3.MaxApertureAtMaxFocal"));
+ 			if (i != exifData.end())
+-				meta->lens_max_aperture = i->toLong()/12.0;
++				meta->lens_max_aperture = i->toInt64()/12.0;
+ 				
+ 			/* Fuji */
+ 			i = exifData.findKey(ExifKey("Exif.Fujifilm.MinFocalLength"));

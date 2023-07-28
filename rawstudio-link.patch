@@ -1,0 +1,11 @@
+--- rawstudio-2.0/configure.in.orig	2023-07-28 11:24:32.059351935 +0200
++++ rawstudio-2.0/configure.in	2023-07-28 13:43:22.820886992 +0200
+@@ -82,7 +82,7 @@ AC_CHECK_LIB(tiff, TIFFOpen, tiff_ok=yes
+ fi
+ AC_SUBST(LIBTIFF)
+ 
+-pkg_modules="gtk+-2.0 >= 2.8.0 libxml-2.0 >= 2.4 gconf-2.0 >= 2.0 lcms dbus-1 exiv2 fftw3f lensfun libcurl flickcurl sqlite3 libssl libgphoto2 x11"
++pkg_modules="gtk+-2.0 >= 2.8.0 libxml-2.0 >= 2.4 gconf-2.0 >= 2.0 lcms dbus-1 exiv2 fftw3f lensfun libcurl flickcurl sqlite3 libssl libgphoto2 x11 gmodule-2.0 gthread-2.0"
+ PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+ AC_SUBST(PACKAGE_CFLAGS)
+ AC_SUBST(PACKAGE_LIBS)

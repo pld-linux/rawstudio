@@ -1,0 +1,1114 @@
+Don't include system headers inside 'extern "C"'; glib (and partially glibc) no longer support this
+--- rawstudio-2.0/librawstudio/rs-1d-function.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-1d-function.h	2023-07-28 10:40:59.506838680 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_1D_FUNCTION rs_1d_function_get_type()
+@@ -90,4 +94,8 @@ rs_1d_function_is_identity(const RS1dFun
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_1D_FUNCTION_H */
+--- rawstudio-2.0/librawstudio/rs-color-space-icc.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-color-space-icc.h	2023-07-28 10:41:32.153328485 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include "rs-color-space.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_COLOR_SPACE_ICC rs_color_space_icc_get_type()
+@@ -51,4 +55,8 @@ RSColorSpace *rs_color_space_icc_new_fro
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_COLOR_SPACE_ICC_H */
+--- rawstudio-2.0/librawstudio/rs-color-space-selector.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-color-space-selector.h	2023-07-28 10:41:49.363235251 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_COLOR_SPACE_SELECTOR rs_color_space_selector_get_type()
+@@ -57,4 +61,8 @@ rs_color_space_selector_set_selected_by_
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RSCOLOR_SPACE_SELECTOR_H */
+--- rawstudio-2.0/librawstudio/rs-color-space.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-color-space.h	2023-07-28 10:42:08.419798679 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_DEFINE_COLOR_SPACE(type_name, TypeName) \
+@@ -157,4 +161,8 @@ rs_color_space_get_description(const RSC
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_COLOR_SPACE_H */
+--- rawstudio-2.0/librawstudio/rs-color.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-color.h	2023-07-28 10:42:31.916338054 +0200
+@@ -20,6 +20,10 @@
+ #ifndef RS_COLOR_H
+ #define RS_COLOR_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ extern const RS_MATRIX3 PCStoProPhoto;
+ extern const RS_XYZ_VECTOR XYZ_WP_D50;
+ 
+@@ -29,4 +33,8 @@ extern RS_XYZ_VECTOR xy_to_XYZ(const RS_
+ extern RS_xy_COORD XYZ_to_xy(const RS_XYZ_VECTOR *XYZ);
+ extern RS_MATRIX3 rs_calculate_map_white_matrix(const RS_xy_COORD *from_xy, const RS_xy_COORD *to_xy);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_COLOR_H */
+--- rawstudio-2.0/librawstudio/rs-curve.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-curve.h	2023-07-28 10:42:50.856235448 +0200
+@@ -23,6 +23,10 @@
+ 
+ #include <gtk/gtk.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ /* Declared in rs-curve.c */
+ typedef struct _RSCurveWidget            RSCurveWidget;
+ typedef struct _RSCurveWidgetClass       RSCurveWidgetClass;
+@@ -159,4 +163,8 @@ rs_curve_set_histogram_data(RSCurveWidge
+ #define RS_IS_CURVE_WIDGET_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), RS_CURVE_TYPE_WIDGET))
+ #define RS_CURVE_WIDGET_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), RS_CURVE_TYPE_WIDGET, RSCurveWidgetClass))
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* _RS_CURVE_H_ */
+--- rawstudio-2.0/librawstudio/rs-dcp-file.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-dcp-file.h	2023-07-28 10:43:16.106098658 +0200
+@@ -25,6 +25,10 @@
+ #include <rs-spline.h>
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_DCP_FILE rs_dcp_file_get_type()
+@@ -77,4 +81,8 @@ const gchar *rs_dcp_get_id(RSDcpFile *dc
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_DCP_FILE_H */
+--- rawstudio-2.0/librawstudio/rs-debug.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-debug.h	2023-07-28 10:43:34.709331209 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ typedef enum {
+@@ -47,4 +51,8 @@ extern guint rs_debug_flags;
+ 
+ G_END_DECLS
+ 
+-#endif /* RS_DEBUG_H */
+\ No newline at the end of file
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
++#endif /* RS_DEBUG_H */
+--- rawstudio-2.0/librawstudio/rs-exif.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-exif.h	2023-07-28 10:44:27.972375992 +0200
+@@ -20,12 +20,12 @@
+ #ifndef RS_EXIF_H
+ #define RS_EXIF_H
+ 
+-#ifdef  __cplusplus
++#include <glib.h>
++#include <rawstudio.h>
+ 
++#ifdef  __cplusplus
+ extern "C" {
+ #endif /* __cplusplus */
+-#include <glib.h>
+-#include <rawstudio.h>
+ 
+ typedef enum {
+ 	RS_EXIF_FILE_TYPE_UNKNOWN,
+--- rawstudio-2.0/librawstudio/rs-filetypes.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-filetypes.h	2023-07-28 10:44:48.258932757 +0200
+@@ -22,6 +22,10 @@
+ #include "rs-types.h"
+ #include "rs-filter-response.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ typedef enum {
+ 	RS_LOADER_FLAGS_RAW  = (1<<0),
+ 	RS_LOADER_FLAGS_8BIT = (1<<1),
+@@ -79,4 +83,8 @@ extern RSFilterResponse *rs_filetype_loa
+  */
+ extern gboolean rs_filetype_meta_load(const gchar *service, RSMetadata *meta, RAWFILE *rawfile, guint offset);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_FILETYPES_H */
+--- rawstudio-2.0/librawstudio/rs-filter-param.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-filter-param.h	2023-07-28 10:45:02.245523651 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_FILTER_PARAM rs_filter_param_get_type()
+@@ -174,4 +178,8 @@ gpointer rs_filter_param_get_object_with
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_FILTER_PARAM_H */
+--- rawstudio-2.0/librawstudio/rs-filter-request.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-filter-request.h	2023-07-28 10:45:23.258743146 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include "rs-filter-param.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_FILTER_REQUEST rs_filter_request_get_type()
+@@ -93,4 +97,8 @@ gboolean rs_filter_request_get_quick(con
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_FILTER_REQUEST_H */
+--- rawstudio-2.0/librawstudio/rs-filter-response.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-filter-response.h	2023-07-28 10:45:40.345317247 +0200
+@@ -25,6 +25,10 @@
+ #include <rs-types.h>
+ #include "rs-filter-param.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_FILTER_RESPONSE rs_filter_response_get_type()
+@@ -162,4 +166,8 @@ gint rs_filter_response_get_height(const
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_FILTER_RESPONSE_H */
+--- rawstudio-2.0/librawstudio/rs-filter.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-filter.h	2023-07-28 10:45:59.928544489 +0200
+@@ -23,6 +23,10 @@
+ #include "rawstudio.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ /**
+@@ -212,4 +216,8 @@ extern void rs_filter_graph(RSFilter *fi
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_FILTER_H */
+--- rawstudio-2.0/librawstudio/rs-gui-functions.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-gui-functions.h	2023-07-28 10:47:09.748166244 +0200
+@@ -24,7 +24,15 @@
+ #include <glib/gstdio.h>
+ #include <gtk/gtk.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ extern GtkWidget *gui_dialog_make_from_text(const gchar *stock_id, gchar *primary_text, gchar *secondary_text);
+ extern GtkWidget *gui_dialog_make_from_widget(const gchar *stock_id, gchar *primary_text, GtkWidget *widget);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* GUI_FUNCTIONS_H */
+--- rawstudio-2.0/librawstudio/rs-huesat-map.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-huesat-map.h	2023-07-28 10:47:25.758079511 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_HUESAT_MAP rs_huesat_map_get_type()
+@@ -61,4 +65,8 @@ void rs_huesat_map_set_delta(RSHuesatMap
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_HUESAT_MAP_H */
+--- rawstudio-2.0/librawstudio/rs-icc-profile.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-icc-profile.h	2023-07-28 10:47:38.514677069 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_ICC_PROFILE rs_icc_profile_get_type()
+@@ -113,4 +117,8 @@ rs_icc_profile_get_description(const RSI
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_ICC_PROFILE_H */
+--- rawstudio-2.0/librawstudio/rs-image.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-image.h	2023-07-28 10:47:53.251263901 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IMAGE rs_image_get_type()
+@@ -54,4 +58,8 @@ rs_image_get_plane(RSImage *image, gint
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IMAGE_H */
+--- rawstudio-2.0/librawstudio/rs-image16.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-image16.h	2023-07-28 10:48:38.304353160 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ #define RS_TYPE_IMAGE16        (rs_image16_get_type ())
+ #define RS_IMAGE16(obj)        (G_TYPE_CHECK_INSTANCE_CAST ((obj), RS_TYPE_IMAGE16, RS_IMAGE16))
+ #define RS_IMAGE16_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), RS_TYPE_IMAGE16, RS_IMAGE16Class))
+@@ -89,4 +93,8 @@ extern inline gushort *rs_image16_get_pi
+ 
+ extern gchar *rs_image16_get_checksum(RS_IMAGE16 *image);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IMAGE16_H */
+--- rawstudio-2.0/librawstudio/rs-io-job-checksum.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-io-job-checksum.h	2023-07-28 10:48:56.154256459 +0200
+@@ -23,6 +23,10 @@
+ #include "rs-io-job.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IO_JOB_CHECKSUM rs_io_job_checksum_get_type()
+@@ -44,4 +48,8 @@ RSIoJob *rs_io_job_checksum_new(const gc
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_JOB_CHECKSUM_H */
+--- rawstudio-2.0/librawstudio/rs-io-job-metadata.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-io-job-metadata.h	2023-07-28 10:49:07.620861006 +0200
+@@ -24,6 +24,10 @@
+ #include "rs-io-job.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IO_JOB_METADATA rs_io_job_metadata_get_type()
+@@ -45,4 +49,8 @@ RSIoJob *rs_io_job_metadata_new(const gc
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_JOB_METADATA_H */
+--- rawstudio-2.0/librawstudio/rs-io-job-prefetch.h.orig	2023-07-28 10:49:23.404108834 +0200
++++ rawstudio-2.0/librawstudio/rs-io-job-prefetch.h	2023-07-28 10:49:27.244088031 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include "rs-io-job.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IO_JOB_PREFETCH rs_io_job_prefetch_get_type()
+@@ -42,4 +46,8 @@ RSIoJob *rs_io_job_prefetch_new(const gc
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_JOB_PREFETCH_H */
+--- rawstudio-2.0/librawstudio/rs-io-job-tagging.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-io-job-tagging.h	2023-07-28 10:49:39.517354874 +0200
+@@ -24,6 +24,10 @@
+ #include "rs-io-job.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IO_JOB_TAGGING rs_io_job_tagging_get_type()
+@@ -47,4 +51,8 @@ RSIoJob *rs_io_job_tagging_new(const gch
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_JOB_TAGGING_H */
+--- rawstudio-2.0/librawstudio/rs-io-job.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-io-job.h	2023-07-28 10:49:52.903949020 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_IO_JOB rs_io_job_get_type()
+@@ -56,4 +60,8 @@ void rs_io_job_do_callback(RSIoJob *job)
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_JOB_H */
+--- rawstudio-2.0/librawstudio/rs-io.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-io.h	2023-07-28 10:50:12.953840400 +0200
+@@ -22,6 +22,10 @@
+ #ifndef RS_IO_H
+ #define RS_IO_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ /**
+  * Add a RSIoJob to be executed later
+  * @param job A RSIoJob. This will be unreffed upon completion
+@@ -127,4 +131,8 @@ rs_io_unlock(void);
+ gint
+ rs_io_get_jobs_left(void);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_IO_H */
+--- rawstudio-2.0/librawstudio/rs-job-queue.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-job-queue.h	2023-07-28 10:50:40.337025386 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_JOB_QUEUE rs_job_queue_get_type()
+@@ -86,4 +90,8 @@ rs_job_update_progress(RSJobQueueSlot *s
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_JOB_QUEUE_H */
+--- rawstudio-2.0/librawstudio/rs-lens-db-editor.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-lens-db-editor.h	2023-07-28 11:06:51.535097288 +0200
+@@ -20,6 +20,10 @@
+ #ifndef RS_LENS_DB_EDITOR_H
+ #define RS_LENS_DB_EDITOR_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ enum {
+         RS_LENS_DB_EDITOR_IDENTIFIER = 0,
+         RS_LENS_DB_EDITOR_HUMAN_FOCAL,
+@@ -37,4 +41,8 @@ enum {
+ extern void rs_lens_db_editor(void);
+ extern GtkDialog * rs_lens_db_editor_single_lens(RSLens *lens);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_LENS_DB_EDITOR_H */
+--- rawstudio-2.0/librawstudio/rs-lens-db.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-lens-db.h	2023-07-28 11:07:04.331694629 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include "rs-lens.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_LENS_DB rs_lens_db_get_type()
+@@ -90,4 +94,8 @@ GList *rs_lens_db_get_lenses(RSLensDb *l
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_LENS_DB_H */
+--- rawstudio-2.0/librawstudio/rs-lens-fix.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-lens-fix.h	2023-07-28 11:07:17.598289425 +0200
+@@ -20,7 +20,15 @@
+ #ifndef RS_LENS_FIX_H
+ #define RS_LENS_FIX_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ gboolean rs_lens_fix_init(void);
+ gboolean rs_lens_fix(RSMetadata *meta);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_LENS_FIX_H */
+--- rawstudio-2.0/librawstudio/rs-lens.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-lens.h	2023-07-28 11:07:31.964878261 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include <rawstudio.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_LENS rs_lens_get_type()
+@@ -80,4 +84,8 @@ gboolean rs_lens_get_lensfun_enabled(RSL
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_LENS_H */
+--- rawstudio-2.0/librawstudio/rs-library.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-library.h	2023-07-28 11:07:43.698148030 +0200
+@@ -25,6 +25,10 @@
+ #include <gtk/gtk.h>
+ #include <rawstudio.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_LIBRARY rs_library_get_type()
+@@ -64,4 +68,8 @@ void rs_library_backup_tags(RSLibrary *l
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_LIBRARY_H */
+--- rawstudio-2.0/librawstudio/rs-math.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-math.h	2023-07-28 11:08:07.658018228 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include "rs-types.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ #define MATRIX_RESOLUTION (11) /* defined in bits! */
+ #define MATRIX_RESOLUTION_ROUNDER (1024) /* Half of fixed point precision */
+ 
+@@ -68,4 +72,8 @@ extern void matrix3_affine_get_minmax(RS
+ unsigned int *
+ interpolate_dataset_int(unsigned int *input_dataset, unsigned int input_length, unsigned int *output_dataset, unsigned int output_length, unsigned int *max);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_MATRIX_H */
+--- rawstudio-2.0/librawstudio/rs-metadata.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-metadata.h	2023-07-28 11:08:21.404610423 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_METADATA rs_metadata_get_type()
+@@ -118,5 +122,9 @@ extern void rs_metadata_delete_cache(con
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_METADATA_H */
+ 
+--- rawstudio-2.0/librawstudio/rs-output.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-output.h	2023-07-28 11:08:39.001181761 +0200
+@@ -23,6 +23,10 @@
+ #include "rawstudio.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ /**
+@@ -131,4 +135,8 @@ rs_output_get_parameter_widget(RSOutput
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_OUTPUT_H */
+--- rawstudio-2.0/librawstudio/rs-plugin-manager.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-plugin-manager.h	2023-07-28 11:09:17.924304229 +0200
+@@ -20,6 +20,10 @@
+ #ifndef RS_PLUGIN_MANAGER_H
+ #define RS_PLUGIN_MANAGER_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ /**
+@@ -30,4 +34,8 @@ rs_plugin_manager_load_all_plugins(void)
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_PLUGIN_MANAGER_H */
+--- rawstudio-2.0/librawstudio/rs-plugin.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-plugin.h	2023-07-28 11:11:23.316958252 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_PLUGIN (rs_plugin_get_type ())
+@@ -43,4 +47,8 @@ void rs_plugin_unload(RSPlugin *plugin);
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_PLUGIN_H */
+--- rawstudio-2.0/librawstudio/rs-profile-camera.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-profile-camera.h	2023-07-28 11:11:34.026900232 +0200
+@@ -20,6 +20,10 @@
+ #ifndef RS_PROFILE_CAMERA_H
+ #define RS_PROFILE_CAMERA_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ typedef struct {
+ 	gchar *make;
+ 	gchar *model;
+@@ -28,4 +32,8 @@ typedef struct {
+ 
+ const gchar * rs_profile_camera_find(gchar *make, gchar *model);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_PROFILE_CAMERA_H */
+--- rawstudio-2.0/librawstudio/rs-profile-factory-model.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-profile-factory-model.h	2023-07-28 11:14:36.772576880 +0200
+@@ -17,6 +17,10 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+  */
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ enum {
+ 	FACTORY_MODEL_COLUMN_TYPE,
+ 	FACTORY_MODEL_COLUMN_PROFILE,
+@@ -33,3 +37,7 @@ enum {
+ 	FACTORY_MODEL_TYPE_SEP,
+ 	FACTORY_MODEL_TYPE_ADD,
+ };
++
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
+--- rawstudio-2.0/librawstudio/rs-profile-factory.h.orig	2011-03-15 23:33:43.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-profile-factory.h	2023-07-28 11:14:49.472508079 +0200
+@@ -24,6 +24,10 @@
+ #include "rs-dcp-file.h"
+ #include "rs-icc-profile.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_PROFILE_FACTORY rs_profile_factory_get_type()
+@@ -75,4 +79,8 @@ void rs_profile_factory_set_embedded_pro
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_PROFILE_FACTORY_H */
+--- rawstudio-2.0/librawstudio/rs-profile-selector.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-profile-selector.h	2023-07-28 11:15:10.772392687 +0200
+@@ -24,6 +24,10 @@
+ #include <gtk/gtk.h>
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_PROFILE_SELECTOR rs_profile_selector_get_type()
+@@ -56,4 +60,8 @@ rs_profile_selector_set_model_filter(RSP
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_PROFILE_SELECTOR_H */
+--- rawstudio-2.0/librawstudio/rs-rawfile.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-rawfile.h	2023-07-28 11:15:38.995573122 +0200
+@@ -24,6 +24,10 @@
+ 
+ #include "rs-types.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ void raw_init(void);
+ RAWFILE *raw_open_file(const gchar *filename);
+ RAWFILE *raw_create_from_memory(void *memory, guint size, guint first_ifd_offset, gushort byteorder);
+@@ -49,4 +53,8 @@ guint get_first_ifd_offset(RAWFILE *rawf
+ void *raw_get_map(RAWFILE *rawfile);
+ guint raw_get_filesize(RAWFILE *rawfile);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RAWFILE_H */
+--- rawstudio-2.0/librawstudio/rs-settings.h.orig	2011-03-06 17:03:51.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-settings.h	2023-07-28 11:15:53.982158600 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_SETTINGS rs_settings_get_type()
+@@ -177,4 +181,8 @@ extern void rs_settings_unlink(RSSetting
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_SETTINGS_H */
+--- rawstudio-2.0/librawstudio/rs-spline.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-spline.h	2023-07-28 11:16:08.902077772 +0200
+@@ -24,6 +24,10 @@
+ #include <glib.h>
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_SPLINE rs_spline_get_type()
+@@ -134,4 +138,8 @@ rs_spline_print(RSSpline *spline);
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_SPLINE_H */
+--- rawstudio-2.0/librawstudio/rs-stock.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-stock.h	2023-07-28 11:16:36.501928250 +0200
+@@ -20,6 +20,10 @@
+ #ifndef RS_STOCK_H
+ #define RS_STOCK_H
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ #define RS_STOCK_CROP                     "tool-crop"
+ #define RS_STOCK_ROTATE                   "tool-rotate"
+ #define RS_STOCK_COLOR_PICKER             "tool-color-picker"
+@@ -38,4 +42,8 @@ typedef enum  {
+ 
+ GdkCursor* rs_cursor_new(GdkDisplay *display, RSCursorType cursor_type);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_STOCK_H */
+--- rawstudio-2.0/librawstudio/rs-tiff-ifd-entry.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-tiff-ifd-entry.h	2023-07-28 11:16:49.721856632 +0200
+@@ -23,6 +23,10 @@
+ #include <rs-types.h>
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_TIFF_IFD_ENTRY rs_tiff_ifd_entry_get_type()
+@@ -51,4 +55,8 @@ RSTiffIfdEntry *rs_tiff_ifd_entry_new(RS
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_TIFF_IFD_ENTRY_H */
+--- rawstudio-2.0/librawstudio/rs-tiff-ifd.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-tiff-ifd.h	2023-07-28 11:17:03.195116974 +0200
+@@ -23,6 +23,10 @@
+ #include <glib-object.h>
+ #include "rs-tiff.h"
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_TIFF_IFD rs_tiff_ifd_get_type()
+@@ -61,4 +65,8 @@ RSTiffIfdEntry *rs_tiff_ifd_get_entry_by
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_TIFF_IFD_H */
+--- rawstudio-2.0/librawstudio/rs-tiff.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-tiff.h	2023-07-28 11:17:14.751721034 +0200
+@@ -24,6 +24,10 @@
+ #include "rs-tiff-ifd-entry.h"
+ #include <glib-object.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ G_BEGIN_DECLS
+ 
+ #define RS_TYPE_TIFF rs_tiff_get_type()
+@@ -92,4 +96,8 @@ rs_tiff_free_data(RSTiff *tiff);
+ 
+ G_END_DECLS
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_TIFF_H */
+--- rawstudio-2.0/librawstudio/rs-types.h.orig	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-types.h	2023-07-28 11:17:38.468259217 +0200
+@@ -22,6 +22,10 @@
+ 
+ #include <gtk/gtk.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ /* Defined in rawfile.c */
+ typedef struct _RAWFILE RAWFILE;
+ 
+@@ -89,5 +93,9 @@ typedef enum {
+ 	G2 = 3
+ } RSColor;
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_TYPES_H */
+ 
+--- rawstudio-2.0/librawstudio/rs-utils.h.orig	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-utils.h	2023-07-28 11:17:56.411495343 +0200
+@@ -23,6 +23,10 @@
+ #include <rs-types.h>
+ #include <glib.h>
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ #define GETVAL(adjustment) \
+ 	gtk_adjustment_get_value((GtkAdjustment *) adjustment)
+ #define SETVAL(adjustment, value) \
+@@ -184,4 +188,8 @@ rs_file_copy(const gchar *source, const
+ gchar *
+ rs_remove_tailing_spaces(gchar *str, gboolean inplace);
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif /* RS_UTILS_H */
+--- rawstudio-2.0/librawstudio/x86-cpu.h.orig	2011-03-06 17:03:51.000000000 +0100
++++ rawstudio-2.0/librawstudio/x86-cpu.h	2023-07-28 11:18:15.654724427 +0200
+@@ -1,6 +1,10 @@
+ #ifndef __X86__CPU_H__
+ #define __X86__CPU_H__
+ 
++#ifdef  __cplusplus
++extern "C" {
++#endif
++
+ typedef enum {
+ 	RS_CPU_FLAG_MMX   = 1<<0,
+ 	RS_CPU_FLAG_SSE   = 1<<1,
+@@ -52,4 +56,8 @@ typedef enum {
+ #  define REGSP   esp
+ #endif
+ 
++#ifdef  __cplusplus
++} /* extern "c" */
++#endif
++
+ #endif
+--- rawstudio-2.0/librawstudio/rawstudio.h.orig	2011-04-07 21:35:12.000000000 +0200
++++ rawstudio-2.0/librawstudio/rawstudio.h	2023-07-28 11:21:35.316976097 +0200
+@@ -20,10 +20,6 @@
+ #ifndef RAWSTUDIO_H
+ #define RAWSTUDIO_H
+ 
+-#ifdef  __cplusplus
+-extern "C" {
+-#endif
+-
+ #include <sys/types.h>
+ #include "rs-types.h"
+ 
+@@ -78,8 +74,4 @@ extern "C" {
+ 
+ #include "x86-cpu.h"
+ 
+-#ifdef  __cplusplus
+-} /* extern "c" */
+-#endif
+-
+ #endif /* RAWSTUDIO_H */

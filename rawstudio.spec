@@ -2,24 +2,19 @@ Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	2.0
-%define	rel	15
-# Keep it for future snapshots because releases are not-so-frequent:
-%define	svnrev	1624
-%define	snap	20080130
-#Release:	1.%{svnrev}.%{snap}.%{rel}
-Release:	%{rel}
+Release:	16
 License:	GPL v2+
 Group:		X11/Applications/Graphics
-# SVN snapshot:
-#Source0:	http://rawstudio.org/files/daily/%{name}-%{snap}-%{svnrev}.tar.bz2
-# Original source:
-Source0:	http://rawstudio.org/files/release/%{name}-%{version}.tar.gz
+Source0:	https://rawstudio.org/files/release/%{name}-%{version}.tar.gz
 # Source0-md5:	b2f86b8ca6b83ad954e3104c4cb89e9b
 Patch0:		%{name}-libpng15.patch
 Patch1:		am.patch
 Patch2:		lensfun.patch
 Patch3:		exiv2-version.patch
-URL:		http://rawstudio.org/
+Patch4:		%{name}-exiv2.patch
+Patch5:		%{name}-extern-c.patch
+Patch6:		%{name}-link.patch
+URL:		https://rawstudio.org/
 BuildRequires:	GConf2-devel >= 2.0
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -71,6 +66,9 @@ Pliki nagłówkowe biblioteki rawstudio.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 export CXXFLAGS="%{rpmcxxflags} -Wno-narrowing"
@@ -79,7 +77,8 @@ export CXXFLAGS="%{rpmcxxflags} -Wno-narrowing"
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	--disable-static
 %{__make}
 
 %install
@@ -101,15 +100,14 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README TODO
-%attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/rawstudio
 %attr(755,root,root) %{_libdir}/librawstudio-%{version}.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/librawstudio-%{version}.so.0
-%{_desktopdir}/%{name}.desktop
-%dir %{_pixmapsdir}/%{name}
-%{_pixmapsdir}/%{name}/*.png
-%{_iconsdir}/%{name}.png
-%{_datadir}/%{name}
 %{_datadir}/rawspeed
+%{_datadir}/rawstudio
+%{_desktopdir}/rawstudio.desktop
+%{_iconsdir}/rawstudio.png
+%{_pixmapsdir}/rawstudio
 
 %files devel
 %defattr(644,root,root,755)
