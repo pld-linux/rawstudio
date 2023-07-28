@@ -34,13 +34,13 @@ BuildRequires:	lcms-devel
 BuildRequires:	lensfun-devel
 BuildRequires:	libgphoto2-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libxml2-devel >= 2.4
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	zstd-devel
 Requires:	gtk+2 >= 2:2.8.0
 Requires:	libxml2 >= 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
