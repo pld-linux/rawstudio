@@ -1,0 +1,233 @@
+--- rawstudio-2.0/librawstudio/rs-lens-db.c~	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-lens-db.c	2025-08-25 13:10:46.696601382 +0200
+@@ -214,7 +214,7 @@ open_db(RSLensDb *lens_db)
+ 	xmlChar *val;
+ 
+ 	/* Some sanity checks */
+-	doc = xmlParseFile(lens_db->path);
++	doc = xmlReadFile((const char *)lens_db->path, NULL, 0);
+ 	if (!doc)
+ 		return;
+ 
+--- rawstudio-2.0/librawstudio/rs-lens-db.c~	2025-08-25 13:11:41.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-lens-db.c	2025-08-25 13:12:49.213982478 +0200
+@@ -20,6 +20,7 @@
+ #include <rawstudio.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
+ #include "config.h"
+ #include "rs-lens-db.h"
+ 
+--- rawstudio-2.0/librawstudio/rs-lens-db.c~	2025-08-25 13:12:49.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-lens-db.c	2025-08-25 13:13:55.007699471 +0200
+@@ -21,6 +21,7 @@
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
+ #include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include "config.h"
+ #include "rs-lens-db.h"
+ 
+--- rawstudio-2.0/librawstudio/rs-lens-fix.c~	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-lens-fix.c	2025-08-25 13:14:21.754522105 +0200
+@@ -19,6 +19,7 @@
+ 
+ #include <rawstudio.h>
+ #include <libxml/encoding.h>
++#include <libxml/parser.h>
+ #include "config.h"
+ 
+ static GHashTable *lens_fix_hash_table;
+--- rawstudio-2.0/librawstudio/rs-metadata.c.org	2025-08-25 13:15:24.678222362 +0200
++++ rawstudio-2.0/librawstudio/rs-metadata.c	2025-08-25 13:15:30.598256883 +0200
+@@ -22,6 +22,7 @@
+ #include <config.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
+ #include "gettext.h"
+ 
+ G_DEFINE_TYPE (RSMetadata, rs_metadata, G_TYPE_OBJECT)
+--- rawstudio-2.0/librawstudio/rs-library.c.org	2025-08-25 13:16:24.568571598 +0200
++++ rawstudio-2.0/librawstudio/rs-library.c	2025-08-25 13:17:11.382177913 +0200
+@@ -58,6 +58,7 @@
+ #include "gettext.h"
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
+ #include <sqlite3.h>
+ 
+ #define LIBRARY_VERSION 2
+@@ -1088,7 +1089,7 @@ rs_library_restore_tags(const gchar *dir
+ 	gchar *filename, *identifier, *tagname;
+ 	gint autotag, photoid, tagid;
+ 
+-	doc = xmlParseFile(xmlfile);
++	doc = xmlReadFile((const char *)xmlfile, NULL, 0);
+ 	if (!doc)
+ 		return;
+ 
+--- rawstudio-2.0/librawstudio/rs-curve.c~	2011-02-15 18:28:05.000000000 +0100
++++ rawstudio-2.0/librawstudio/rs-curve.c	2025-08-25 13:17:59.239123645 +0200
+@@ -22,6 +22,7 @@
+ #include <math.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
+ #include <string.h> /* memset() */
+ 
+ struct _RSCurveWidget
+@@ -491,7 +492,7 @@ rs_curve_widget_load(RSCurveWidget *curv
+ 
+ 	if (!filename) return FALSE;
+ 	if (!g_file_test(filename, G_FILE_TEST_IS_REGULAR)) return FALSE;
+-	doc = xmlParseFile(filename);
++	doc = xmlReadFile((const char *)filename, NULL, 0);
+ 	if(doc==NULL) return FALSE;
+ 
+ 	cur = xmlDocGetRootElement(doc);
+--- rawstudio-2.0/librawstudio/rs-profile-camera.c~	2011-03-31 22:45:15.000000000 +0200
++++ rawstudio-2.0/librawstudio/rs-profile-camera.c	2025-08-25 13:20:22.503292388 +0200
+@@ -21,6 +21,7 @@
+ #include "config.h"
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
+ #include "rs-utils.h"
+ 
+ const gchar *
+@@ -69,7 +70,7 @@ rs_profile_camera_find(gchar *make, gcha
+ 	if (!g_file_test(filename, G_FILE_TEST_IS_REGULAR))
+ 		return NULL;
+ 
+-	doc = xmlParseFile(filename);
++	doc = xmlReadFile((const char *)filename, NULL, 0);
+ 	if (!doc)
+ 		return NULL;
+ 
+--- rawstudio-2.0/plugins/output-facebook/rs-facebook-client.c~	2011-04-05 16:26:19.000000000 +0200
++++ rawstudio-2.0/plugins/output-facebook/rs-facebook-client.c	2025-08-25 13:25:03.694932099 +0200
+@@ -19,6 +19,8 @@
+ 
+ #include <curl/curl.h>
+ #include <libxml/encoding.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include <gtk/gtk.h>
+ #include <glib.h>
+ #include <glib/gstdio.h>
+--- rawstudio-2.0/plugins/output-picasa/rs-picasa-client.c~	2011-03-27 19:53:27.000000000 +0200
++++ rawstudio-2.0/plugins/output-picasa/rs-picasa-client.c	2025-08-25 13:25:54.658562644 +0200
+@@ -10,6 +10,8 @@
+ #include <glib.h>
+ #include <gtk/gtk.h>
+ #include <libxml/encoding.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include <string.h>
+ #include <curl/curl.h>
+ #include "rs-picasa-client.h"
+--- rawstudio-2.0/src/rs-camera-db.c~	2011-03-20 21:34:30.000000000 +0100
++++ rawstudio-2.0/src/rs-camera-db.c	2025-08-25 13:26:45.418858670 +0200
+@@ -21,6 +21,8 @@
+ #include "gettext.h"
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include "rs-camera-db.h"
+ #include "rs-photo.h"
+ #include "rs-toolbox.h"
+--- rawstudio-2.0/src/rs-cache.c~	2011-03-15 23:33:43.000000000 +0100
++++ rawstudio-2.0/src/rs-cache.c	2025-08-25 13:27:36.099154230 +0200
+@@ -21,6 +21,8 @@
+ #include <glib.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include "application.h"
+ #include "rs-cache.h"
+ #include "rs-photo.h"
+@@ -361,7 +363,7 @@ rs_cache_load(RS_PHOTO *photo)
+ 	if (!cachename) return mask;
+ 	if (!g_file_test(cachename, G_FILE_TEST_IS_REGULAR)) return FALSE;
+ 	photo->exported = FALSE;
+-	doc = xmlParseFile(cachename);
++	doc = xmlReadFile((const char *)cachename, NULL, 0);
+ 	if(doc==NULL) return mask;
+ 
+ 	/* Return something if the file exists */
+--- rawstudio-2.0/src/rs-batch.c~	2011-04-07 20:05:03.000000000 +0200
++++ rawstudio-2.0/src/rs-batch.c	2025-08-25 13:28:23.642764831 +0200
+@@ -24,6 +24,8 @@
+ #include <config.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include "application.h"
+ #include "rs-batch.h"
+ #include "conf_interface.h"
+@@ -97,7 +99,7 @@ batch_queue_load(RS_QUEUE *queue)
+ 	if (!g_file_test(batch_queue_filename, G_FILE_TEST_IS_REGULAR))
+ 		return;
+ 
+-	doc = xmlParseFile(batch_queue_filename);
++	doc = xmlReadFile((const char *)batch_queue_filename, NULL, 0);
+ 	if (!doc)
+ 		return;
+ 
+--- rawstudio-2.0/src/rs-store.c~	2011-03-20 21:36:03.000000000 +0100
++++ rawstudio-2.0/src/rs-store.c	2025-08-25 13:29:10.329703768 +0200
+@@ -23,6 +23,8 @@
+ #include <config.h>
+ #include <libxml/encoding.h>
+ #include <libxml/xmlwriter.h>
++#include <libxml/parser.h>
++#include <libxml/tree.h>
+ #include <glib.h>
+ #include <math.h>
+ #include <memory.h>
+@@ -2288,7 +2290,7 @@ store_load_groups(GtkListStore *store) {
+ 	if (!g_file_test(xmlfile, G_FILE_TEST_IS_REGULAR))
+ 		return;
+ 
+-	doc = xmlParseFile(xmlfile);
++	doc = xmlReadFile((const char *)xmlfile, NULL, 0);
+ 	if (!doc)
+ 		return;
+ 	
+--- rawstudio-2.0/src/rs-tethered-shooting.c.org	2025-08-25 13:29:55.573300954 +0200
++++ rawstudio-2.0/src/rs-tethered-shooting.c	2025-08-25 13:34:19.384839462 +0200
+@@ -115,12 +115,12 @@ append_status(TetherInfo *t, const gchar
+ }
+ 
+ static void
+-ctx_error_func (GPContext *context, const char *format, va_list args, void *data)
++ctx_error_func (GPContext *context, const char *message, void *data)
+ {
+ 	gdk_threads_lock();
+ 	TetherInfo *t = (TetherInfo*)data;
+ 	append_status (t, _("Gphoto2 reported Context Error:\n"));
+-	append_status_va_list(t, format, args);
++	append_status (t, "%s", message ? message : "");
+ 	append_status  (t, "\n");
+ 	if (t->async_thread_id && t->async_thread_id != g_thread_self())
+ 		shutdown_async_thread(t);
+@@ -129,12 +129,11 @@ ctx_error_func (GPContext *context, cons
+ }
+ 
+ static void
+-ctx_status_func (GPContext *context, const char *format, va_list args, void *data)
++ctx_status_func (GPContext *context, const char *message, void *data)
+ {
+ 	TetherInfo *t = (TetherInfo*)data;
+ 	gdk_threads_lock();
+-	append_status_va_list(t, format, args);
+-	append_status  (t, "\n");
++	append_status (t, "%s\n", message ? message : "");
+ 	gdk_threads_unlock();
+ }
+ 
