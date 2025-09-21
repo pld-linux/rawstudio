@@ -2,7 +2,7 @@ Summary:	RAW-image converter written using GTK+
 Summary(pl.UTF-8):	Konwerter obrazów RAW napisany z użyciem GTK+
 Name:		rawstudio
 Version:	2.0
-Release:	18
+Release:	19
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	https://rawstudio.org/files/release/%{name}-%{version}.tar.gz
